@@ -1,9 +1,8 @@
-
 const words = [
-    "Web Developer",
-    "Designer",
-    "Student",
-    "Creative Coder"
+"Web Developer",
+"Designer",
+"Student",
+"Creative Coder"
 ];
 
 let wordIndex = 0;
@@ -14,46 +13,47 @@ const typing = document.getElementById("typing");
 
 function typeEffect() {
 
-    const currentWord = words[wordIndex];
+const currentWord = words[wordIndex];
 
-    if (!deleting) {
+if (!deleting) {
 
-        typing.textContent =
-            currentWord.substring(0, charIndex + 1);
+    typing.textContent =
+        currentWord.substring(0, charIndex + 1);
 
-        charIndex++;
+    charIndex++;
 
-        if (charIndex === currentWord.length) {
+    if (charIndex === currentWord.length) {
 
-            deleting = true;
+        deleting = true;
 
-            setTimeout(typeEffect, 1200);
+        setTimeout(typeEffect, 1200);
 
-            return;
-        }
+        return;
+    }
 
-    } else {
+} else {
 
-        typing.textContent =
-            currentWord.substring(0, charIndex - 1);
+    typing.textContent =
+        currentWord.substring(0, charIndex - 1);
 
-        charIndex--;
+    charIndex--;
 
-        if (charIndex === 0) {
+    if (charIndex === 0) {
 
-            deleting = false;
+        deleting = false;
 
-            wordIndex++;
+        wordIndex++;
 
-            if (wordIndex === words.length) {
-                wordIndex = 0;
-            }
-
+        if (wordIndex === words.length) {
+            wordIndex = 0;
         }
 
     }
 
-    setTimeout(typeEffect, deleting ? 60 : 100);
+}
+
+setTimeout(typeEffect, deleting ? 60 : 100);
+
 }
 
 typeEffect();
@@ -63,35 +63,34 @@ const navLinks = document.getElementById("navLinks");
 
 menuBtn.addEventListener("click", () => {
 
-    navLinks.classList.toggle("active");
+navLinks.classList.toggle("active");
 
-    const icon = menuBtn.querySelector("i");
+const icon = menuBtn.querySelector("i");
 
-    if (navLinks.classList.contains("active")) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-    } else {
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-    }
+if (navLinks.classList.contains("active")) {
+    icon.classList.remove("fa-bars");
+    icon.classList.add("fa-xmark");
+} else {
+    icon.classList.remove("fa-xmark");
+    icon.classList.add("fa-bars");
+}
 
 });
-
 
 // Close mobile menu after clicking a link
 
 document.querySelectorAll(".nav-links a").forEach(link => {
 
-    link.addEventListener("click", () => {
+link.addEventListener("click", () => {
 
-        navLinks.classList.remove("active");
+    navLinks.classList.remove("active");
 
-        const icon = menuBtn.querySelector("i");
+    const icon = menuBtn.querySelector("i");
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+    icon.classList.remove("fa-xmark");
+    icon.classList.add("fa-bars");
 
-    });
+});
 
 });
 
@@ -99,36 +98,35 @@ const themeBtn = document.getElementById("themeBtn");
 
 themeBtn.addEventListener("click", () => {
 
-    document.body.classList.toggle("light");
+document.body.classList.toggle("light");
 
-    const icon = themeBtn.querySelector("i");
+const icon = themeBtn.querySelector("i");
 
-    if (document.body.classList.contains("light")) {
+if (document.body.classList.contains("light")) {
 
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
 
-        localStorage.setItem("theme", "light");
+    localStorage.setItem("theme", "light");
 
-    } else {
+} else {
 
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
 
-        localStorage.setItem("theme", "dark");
+    localStorage.setItem("theme", "dark");
 
-    }
+}
 
 });
 
-
 if (localStorage.getItem("theme") === "light") {
 
-    document.body.classList.add("light");
+document.body.classList.add("light");
 
-    themeBtn.querySelector("i").classList.remove("fa-moon");
+themeBtn.querySelector("i").classList.remove("fa-moon");
 
-    themeBtn.querySelector("i").classList.add("fa-sun");
+themeBtn.querySelector("i").classList.add("fa-sun");
 
 }
 
@@ -136,96 +134,123 @@ const scrollTop = document.getElementById("scrollTop");
 
 window.addEventListener("scroll", () => {
 
-    if (window.scrollY > 500) {
-        scrollTop.style.display = "grid";
-    } else {
-        scrollTop.style.display = "none";
-    }
+if (window.scrollY > 500) {
+    scrollTop.style.display = "grid";
+} else {
+    scrollTop.style.display = "none";
+}
 
 });
 
 scrollTop.addEventListener("click", () => {
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+});
 
 });
+
+// Contact form connected to Formspree
 
 const contactForm = document.getElementById("contactForm");
 
 contactForm.addEventListener("submit", function(event) {
 
-    event.preventDefault();
+event.preventDefault();
 
-    const name =
-        document.getElementById("name").value;
+const name =
+    document.getElementById("name").value;
 
-    const email =
-        document.getElementById("email").value;
+const email =
+    document.getElementById("email").value;
 
-    const subject =
-        document.getElementById("subject").value;
+const subject =
+    document.getElementById("subject").value;
 
-    const message =
-        document.getElementById("message").value;
+const message =
+    document.getElementById("message").value;
 
 
-    if (!name || !email || !subject || !message) {
+if (!name || !email || !subject || !message) {
 
-        alert("Please fill all the fields.");
+    alert("Please fill all the fields.");
 
-        return;
+    return;
+}
+
+
+const formData = new FormData(contactForm);
+
+fetch(contactForm.action, {
+    method: "POST",
+    body: formData,
+    headers: {
+        "Accept": "application/json"
+    }
+})
+.then(response => {
+
+    if (response.ok) {
+
+        alert(
+            "Thank you, " +
+            name +
+            "! Your message has been sent successfully. 💖"
+        );
+
+        contactForm.reset();
+
+    } else {
+
+        alert("Oops! Something went wrong. Please try again.");
+
     }
 
+})
+.catch(error => {
 
-    alert(
-        "Thank you, " +
-        name +
-        "! Your message has been received. 💖"
-    );
+    alert("There was a problem sending your message. Please try again.");
 
-    contactForm.reset();
+});
 
 });
 
 const sections =
-    document.querySelectorAll(".section");
+document.querySelectorAll(".section");
 
 const observer =
-    new IntersectionObserver(
-        entries => {
+new IntersectionObserver(
+entries => {
 
-            entries.forEach(entry => {
+        entries.forEach(entry => {
 
-                if (entry.isIntersecting) {
+            if (entry.isIntersecting) {
 
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform =
-                        "translateY(0)";
+                entry.target.style.opacity = "1";
+                entry.target.style.transform =
+                    "translateY(0)";
 
-                }
+            }
 
-            });
+        });
 
-        },
-        {
-            threshold: 0.1
-        }
-    );
-
+    },
+    {
+        threshold: 0.1
+    }
+);
 
 sections.forEach(section => {
 
-    section.style.opacity = "0";
+section.style.opacity = "0";
 
-    section.style.transform =
-        "translateY(30px)";
+section.style.transform =
+    "translateY(30px)";
 
-    section.style.transition =
-        "opacity 0.8s ease, transform 0.8s ease";
+section.style.transition =
+    "opacity 0.8s ease, transform 0.8s ease";
 
-    observer.observe(section);
+observer.observe(section);
 
 });
